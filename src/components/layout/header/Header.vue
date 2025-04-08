@@ -1,45 +1,60 @@
 <template>
-    <v-layout>
-      <v-app-bar
-        color="indigo"
-        dark
-      >
+  <v-layout>
+    <v-app-bar :elevation="0" :color="theme.global.current.value.colors.primary">
+     
+      <template v-slot:prepend>
+        <div class="d-flex align-center">
+          <v-avatar class="mr-3 pokeball-spin" size="50">
+            <img
+              src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+              alt="Pokeball"
+            />
+          </v-avatar>
+          <v-app-bar-title class="text-h5 font-roboto font-weight-bold">
+            <span class="black--text">Poké</span><span class="white--text">dex</span>
+          </v-app-bar-title>
+        </div>
+      </template>
+
+      <v-spacer></v-spacer>
+
       
-        <v-app-bar-title>
-          <v-img
-            :src="logo_src"
-            :alt="alt"
-            max-height="40"
-            max-width="40"
-            class="mr-2"
-          ></v-img>
-          My Pokedex App
-        </v-app-bar-title>
-        
-        <!-- Add your navigation items here -->
-        <v-spacer></v-spacer>
-        
-        <!-- Example menu items -->
-        <v-btn variant="text">Home</v-btn>
-        <v-btn variant="text">About</v-btn>
-      </v-app-bar>
-  
-      <!-- Main content area -->
-      <v-main>
-        <slot></slot>
-      </v-main>
-    </v-layout>
-  </template>
-  
-  <script setup>
-  defineProps({
-    logo: {
-      type: String,
-      required: true
-    },
-    alt: {
-      type: String,
-      default: 'Logo'
-    }
-  })
-  </script>
+      <v-btn variant="text" class="mx-1" prepend-icon="mdi-home">Home</v-btn>
+      <v-btn variant="text" class="mx-1" prepend-icon="mdi-information">About</v-btn>
+
+     
+      <template v-slot:append>
+        <v-btn
+          :icon="theme.global.current.value.dark ? 'mdi-brightness-7' : 'mdi-weather-night'"
+          @click="toggleTheme"
+          variant="text"
+          :color="theme.global.current.value.dark ? 'yellow' : 'white'"
+        />
+      </template>
+    </v-app-bar>
+  </v-layout>
+</template>
+
+<script setup>
+import { useTheme } from 'vuetify'
+
+const theme = useTheme()
+
+const toggleTheme = () => {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+}
+</script>
+
+<style scoped>
+.pokeball-spin {
+  transition: transform 0.6s ease;
+}
+
+.pokeball-spin:hover {
+  transform: rotate(360deg);
+}
+
+:deep(.v-toolbar__image) {
+  opacity: 0.8 !important;
+}
+</style>
