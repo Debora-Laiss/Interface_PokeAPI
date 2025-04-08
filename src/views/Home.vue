@@ -10,9 +10,6 @@
         <h1 class="text-center white--text mb-2" style="font-size: 5rem">
           Pokedex
         </h1>
-        <h1 class="text-center white--text mb-8">
-          Created by Debora Lais
-        </h1>
   
         <v-text-field
           v-model="search"
@@ -44,8 +41,8 @@
   import { ref, computed, onMounted } from 'vue'
   import axios from 'axios'
   
-  import PokemonCard from '../components/PokemonCard.vue'
-  import PokemonInfoDialog from '../components/PokemonInfoDialog.vue'
+  import PokemonCard from '../components/pokemon/PokemonCard.vue'
+  import PokemonInfoDialog from '../components/dialogs/PokemonInfoDialog.vue'
   
   const pokemons = ref([])
   const search = ref('')
