@@ -11,7 +11,7 @@
             />
           </v-avatar>
           <v-app-bar-title class="text-h5 font-roboto font-weight-bold">
-            <span class="black--text">Poké</span><span class="white--text">dex</span>
+            <span class="white--text">Pokédex</span>
           </v-app-bar-title>
         </div>
       </template>
