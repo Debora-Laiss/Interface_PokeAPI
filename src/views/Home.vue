@@ -75,27 +75,68 @@
       :selected_pokemon="selectedPokemon"
     />
   </v-app>
+
+  <!-- Sentinela para scroll infinito -->
+<div ref="scrollObserver" class="observer" />
+
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import axios from 'axios'
 
 import PokemonCard from '../components/pokemon/PokemonCard.vue'
 import PokemonInfoDialog from '../components/dialogs/PokemonInfoDialog.vue'
 import imgPrincipal from '../assets/img-principal.svg'
 
+// Variáveis
 const pokemons = ref([])
 const search = ref('')
 const showDialog = ref(false)
 const selectedPokemon = ref(null)
 const viewType = ref('grid')
 
-onMounted(async () => {
-  const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=493')
-  pokemons.value = response.data.results
+// Scroll infinito
+const limit = ref(24)
+const offset = ref(0)
+const isLoading = ref(false)
+const scrollObserver = ref(null)
+let observer = null
+
+const loadMorePokemons = async () => {
+  if (isLoading.value) return
+
+  isLoading.value = true
+  const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${offset.value}&limit=${limit.value}`)
+  pokemons.value.push(...response.data.results)
+  offset.value += limit.value
+  isLoading.value = false
+}
+
+const createObserver = () => {
+  observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      loadMorePokemons()
+    }
+  })
+
+  if (scrollObserver.value) {
+    observer.observe(scrollObserver.value)
+  }
+}
+
+onMounted(() => {
+  loadMorePokemons()
+  createObserver()
 })
 
+onBeforeUnmount(() => {
+  if (observer && scrollObserver.value) {
+    observer.unobserve(scrollObserver.value)
+  }
+})
+
+// Utilidades
 const showPokemon = async (id) => {
   const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
   selectedPokemon.value = response.data
@@ -119,6 +160,7 @@ const getMoveLevel = (move) => {
   return 0
 }
 
+// Filtro
 const filteredPokemons = computed(() => {
   if (!search.value.trim()) {
     return pokemons.value
@@ -127,6 +169,7 @@ const filteredPokemons = computed(() => {
     item.name.toLowerCase().includes(search.value.toLowerCase())
   )
 })
+
 </script>
 
 <style>
@@ -142,10 +185,15 @@ const filteredPokemons = computed(() => {
   letter-spacing: 2px;
 }
 
+.observer {
+  height: 1px;
+}
 
 @media (max-width: 600px) {
   .pokedex-title {
     font-size: 3rem;
   }
 }
+
+
 </style>
