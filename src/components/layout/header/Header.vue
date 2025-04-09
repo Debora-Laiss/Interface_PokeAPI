@@ -11,7 +11,7 @@
             />
           </v-avatar>
           <v-app-bar-title class="text-h5 font-roboto font-weight-bold">
-            <span class="white--text">Pokédex</span>
+            <span class="pokedex--text">Pokédex</span>
           </v-app-bar-title>
         </div>
       </template>
@@ -56,5 +56,14 @@ const toggleTheme = () => {
 
 :deep(.v-toolbar__image) {
   opacity: 0.8 !important;
+}
+.pokedex--text {
+  color: #ffcb05;
+  text-shadow: 4px 4px 0 #3b5ba7, 
+              -2px -2px 0 #516699, 
+              2px -2px 0 #3b5ba7, 
+              -2px 2px 0 #3b5ba7, 
+              2px 2px 0 #3b5ba7;
+  letter-spacing: 2px;
 }
 </style>
