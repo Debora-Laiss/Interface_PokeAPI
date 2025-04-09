@@ -2,7 +2,7 @@
   <v-app>
     <v-container>
       <v-img
-        src="/src/assets/img-principal.svg"
+        :src="imgPrincipal"
         class=" mx-auto mt-15 "
         height="150px"
         contain
@@ -83,6 +83,7 @@ import axios from 'axios'
 
 import PokemonCard from '../components/pokemon/PokemonCard.vue'
 import PokemonInfoDialog from '../components/dialogs/PokemonInfoDialog.vue'
+import imgPrincipal from '../assets/img-principal.svg'
 
 const pokemons = ref([])
 const search = ref('')
