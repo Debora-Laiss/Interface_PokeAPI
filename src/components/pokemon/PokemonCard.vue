@@ -125,10 +125,10 @@ export default {
 <style scoped>
 .pokemon-card {
   transition: transform 0.2s ease;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
+  background: linear-gradient(to bottom, rgba(255, 0, 0, 0.03), rgba(0, 0, 0, 0.015));
   backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  
 }
 
 .pokemon-card:hover {
@@ -144,8 +144,4 @@ export default {
   transform: scale(1.05);
 }
 
-.pokemon-name {
-  font-weight: bold;
-  text-transform: capitalize;
-}
 </style>
