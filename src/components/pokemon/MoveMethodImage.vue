@@ -34,7 +34,7 @@ const props = defineProps({
   method: String,
 })
 
-// Define the icon paths
+
 const levelUpIcon = levelUpSvg
 const eggIcon = eggSvg
 const bookIcon = bookSvg

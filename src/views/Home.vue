@@ -3,11 +3,11 @@
       <v-container>
         <v-img
             src="/src/assets/pokedex.png"
-            class="my-3"
+            class="my-12 " 
             
             height="150px"
           />
-        <h1 class="text-center white--text mb-2" style="font-size: 5rem">
+        <h1 class="text-center white--text mb-4" style="font-size: 5rem">
           Pokedex
         </h1>
   
