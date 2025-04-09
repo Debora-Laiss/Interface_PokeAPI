@@ -3,22 +3,22 @@
     <v-img
       v-if="method == 'level-up'"
       :src="levelUpIcon"
-      width="30px"
+      width="80px"
     ></v-img>
     <v-img
       v-else-if="method == 'egg'"
       :src="eggIcon"
-      width="30px"
+      width="40px"
     ></v-img>
     <v-img
       v-else-if="method == 'machine'"
       :src="bookIcon"
-      width="30px"
+      width="90px"
     ></v-img>
     <v-img
       v-else-if="method == 'tutor'"
       :src="teacherIcon"
-      width="30px"
+      width="40px"
     ></v-img>
   </div>
 </template>
