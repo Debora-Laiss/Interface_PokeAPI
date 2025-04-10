@@ -60,7 +60,7 @@
 
 <script setup>
 import { useTheme } from 'vuetify'
-import { useI18n } from 'vue-i18n'
+import { useI18n } from '../../../lang/lang'
 import { ref, onMounted } from 'vue'
 
 const theme = useTheme()
