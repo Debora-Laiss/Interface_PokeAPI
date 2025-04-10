@@ -64,7 +64,7 @@ import { useI18n } from 'vue-i18n'
 import { ref, onMounted } from 'vue'
 
 const theme = useTheme()
-const { t, locale } = useI18n()
+const { t, locale } = useI18n({ useScope: 'global' }) // Added useScope parameter
 
 //DarkMode
 const toggleTheme = () => {
@@ -77,6 +77,7 @@ const selectedLocale = ref(locale.value)
 const changeLocale = (lang) => {
   locale.value = lang
   localStorage.setItem('locale', lang)
+  console.log('Language changed to:', lang)
 }
 
 onMounted(() => {
@@ -85,6 +86,12 @@ onMounted(() => {
     locale.value = savedLocale
     selectedLocale.value = savedLocale
   }
+  
+  // Debugging
+  console.log('Current locale:', locale.value)
+  console.log('Translation test (nav.home):', t('nav.home'))
+  console.log('Translation test (about.title):', t('about.title'))
+  console.log('All available messages:', JSON.stringify(t.messages, null, 2))
 })
 </script>
 
