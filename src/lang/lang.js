@@ -126,10 +126,10 @@ const messages = {
 }
 
 const i18n = createI18n({
-  legacy: false,
-  locale: 'en',
-  fallbackLocale: 'pt',
-  messages,
-})
-
-export default i18n
+    legacy: false,
+    locale: localStorage.getItem('locale') || 'pt', // Use stored preference or default to Portuguese
+    fallbackLocale: 'en',
+    messages,
+  })
+  
+  export default i18n
