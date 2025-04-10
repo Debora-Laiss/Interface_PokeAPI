@@ -185,15 +185,14 @@ const filteredPokemons = computed(() => {
   letter-spacing: 2px;
 }
 
-.observer {
-  height: 1px;
-}
 
 @media (max-width: 600px) {
   .pokedex-title {
     font-size: 3rem;
   }
 }
-
+.observer {
+  height: 1px;
+}
 
 </style>
