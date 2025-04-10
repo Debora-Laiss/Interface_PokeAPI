@@ -61,7 +61,7 @@
 <script setup>
 import { useTheme } from 'vuetify'
 import { useI18n } from 'vue-i18n'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const theme = useTheme()
 const { t, locale } = useI18n()
@@ -73,9 +73,19 @@ const toggleTheme = () => {
 
 // Idioma atual
 const selectedLocale = ref(locale.value)
+
 const changeLocale = (lang) => {
   locale.value = lang
+  localStorage.setItem('locale', lang)
 }
+
+onMounted(() => {
+  const savedLocale = localStorage.getItem('locale')
+  if (savedLocale) {
+    locale.value = savedLocale
+    selectedLocale.value = savedLocale
+  }
+})
 </script>
 
 <style scoped>
