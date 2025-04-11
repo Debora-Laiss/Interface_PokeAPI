@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :logo="logo_src" :alt="app_name" />
+    <Header />
     <div>
       <router-view></router-view>
     </div>
@@ -14,7 +14,6 @@ import Footer from './components/layout/footer/Footer.vue'
 export default {
   data: function() {
     return {
-      logo_src: "./assets/logo.png",
       app_name: "Search"
     }
   },

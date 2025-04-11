@@ -85,9 +85,9 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import axios from 'axios'
 
-import PokemonCard from '../components/pokemon/PokemonCard.vue'
-import PokemonInfoDialog from '../components/dialogs/PokemonInfoDialog.vue'
-import imgPrincipal from '../assets/img-principal.svg'
+import PokemonCard from '../../components/pokemon/PokemonCard.vue'
+import PokemonInfoDialog from '../../components/dialogs/PokemonInfoDialog.vue'
+import imgPrincipal from '../../assets/img-principal.svg'
 
 // Variáveis
 const pokemons = ref([])
@@ -138,7 +138,7 @@ onBeforeUnmount(() => {
 
 // Utilidades
 const showPokemon = async (id) => {
-  const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+  const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`) //pegar do ultis
   selectedPokemon.value = response.data
   showDialog.value = true
 }

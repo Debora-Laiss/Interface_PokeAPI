@@ -50,6 +50,7 @@
       <v-card-subtitle v-if="pokemonStats" class="text-center d-block pa-5 text-h5">
         <PokemonStats :pokemon="pokemonStats" />
       </v-card-subtitle>
+
     </v-container>
   </v-card>
 </template>
