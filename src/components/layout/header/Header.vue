@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-app-bar :elevation="0" :color="theme.global.current.value.colors.primary">
-      <!-- Avatar + Título -->
+      <!-- Pokebola + Texto -->
       <template v-slot:prepend>
         <div class="d-flex align-center">
           <v-avatar class="mr-3 pokeball-spin" size="50">
@@ -18,41 +18,70 @@
 
       <v-spacer />
 
-       <!-- Navegação -->
-      <RouterLink to="/" custom v-slot="{ navigate, href }">
-        <v-btn :href="href" @click="navigate" variant="text" class="mx-1" prepend-icon="mdi-home">
-          {{ t('nav.home') }}
-        </v-btn>
-      </RouterLink>
+      <!-- Navegação Desktop -->
+      <div class="d-none d-sm-flex align-center">
+        <RouterLink to="/" custom v-slot="{ navigate, href }">
+          <v-btn :href="href" @click="navigate" variant="text" class="mx-1" prepend-icon="mdi-home">
+            {{ t('nav.home') }}
+          </v-btn>
+        </RouterLink>
 
-      <RouterLink to="/about" custom v-slot="{ navigate, href }">
-        <v-btn :href="href" @click="navigate" variant="text" class="mx-1" prepend-icon="mdi-information">
-          {{ t('nav.about') }}
-        </v-btn>
-      </RouterLink>
-      <!-- Seletor de idioma -->
-      <v-btn-toggle
-        v-model="selectedLocale"
-        @update:modelValue="changeLocale"
-        density="compact"
-        class="ml-4"
-        color="white"
-        divided
-        mandatory
-      >
-        <v-btn value="pt">PT</v-btn>
-        <v-btn value="en">EN</v-btn>
-        <v-btn value="es">ES</v-btn>
-      </v-btn-toggle>
-
-      <!-- Botão Darkmode -->
-      <template v-slot:append>
+        <RouterLink to="/about" custom v-slot="{ navigate, href }">
+          <v-btn :href="href" @click="navigate" variant="text" class="mx-1" prepend-icon="mdi-information">
+            {{ t('nav.about') }}
+          </v-btn>
+        </RouterLink>
+        
+        <!-- Seletor de idioma -->
+        <v-btn-toggle
+          v-model="selectedLocale"
+          @update:modelValue="changeLocale"
+          density="compact"
+          class="ml-4"
+          color="white"
+          divided
+          mandatory
+        >
+          <v-btn value="pt">PT</v-btn>
+          <v-btn value="en">EN</v-btn>
+          <v-btn value="es">ES</v-btn>
+        </v-btn-toggle>
+        
+        <!-- Botão Darkmode Desktop -->
         <v-btn
           :icon="theme.global.current.value.dark ? 'mdi-brightness-7' : 'mdi-weather-night'"
           @click="toggleTheme"
           variant="text"
           :color="theme.global.current.value.dark ? 'yellow' : 'white'"
+          class="ml-2"
         />
+      </div>
+      
+      <!-- Navegação Mobile -->
+      <template v-slot:append>
+        <div class="d-flex d-sm-none align-center">
+          <RouterLink to="/" custom v-slot="{ navigate, href }">
+            <v-btn :href="href" @click="navigate" size="small" prepend-icon="mdi-home" variant="text" class="mobile-nav-btn">
+              Home
+            </v-btn>
+          </RouterLink>
+
+          <RouterLink to="/about" custom v-slot="{ navigate, href }">
+            <v-btn :href="href" @click="navigate" prepend-icon="mdi-information" size="small" variant="text" class="mobile-nav-btn">
+              Sobre
+            </v-btn>
+          </RouterLink>
+          
+          <!-- Botão Darkmode Mobile -->
+          <v-btn
+            :icon="theme.global.current.value.dark ? 'mdi-brightness-7' : 'mdi-weather-night'"
+            @click="toggleTheme"
+            variant="text"
+            size="small"
+            :color="theme.global.current.value.dark ? 'yellow' : 'white'"
+            class="mobile-darkmode-btn"
+          />
+        </div>
       </template>
     </v-app-bar>
   </v-layout>
@@ -71,7 +100,7 @@ const toggleTheme = () => {
   theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
 }
 
-// Idioma atual
+
 const selectedLocale = ref(locale.value)
 
 const changeLocale = (lang) => {
@@ -106,5 +135,22 @@ onMounted(() => {
               -2px 2px 0 #3b5ba7,
               2px 2px 0 #3b5ba7;
   letter-spacing: 2px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 600px) {
+  .pokedex--text {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+  
+  .mobile-nav-btn {
+    padding: 0 8px !important;
+    min-width: auto !important;
+  }
+  
+  .mobile-darkmode-btn {
+    margin-left: 4px;
+  }
 }
 </style>
