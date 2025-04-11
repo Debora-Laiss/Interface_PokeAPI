@@ -17,8 +17,11 @@ A Pokédex é um dispositivo eletrônico criado pelo Professor Oak para cataloga
   - Jogos em que o Pokémon está presente (**game_indices**).
 - 🎨 **Visualização de Tipos:** com emblemas e cores distintas para cada tipo.
 - 📌 **Exibição de Estatísticas Base:** como HP, ataque, defesa e velocidade.
-- 🌐 **Suporte a Múltiplos Idiomas:** português, inglês e espanhol com Vue I18n.
-- 🌙 **Modo escuro** com alternância automática.
+- 🌐 **Suporte a Múltiplos Idiomas:** português, inglês e espanhol com Vue I18n.  
+  ⚠️ *O seletor de idioma está disponível apenas em dispositivos com telas médias ou grandes (como tablets e desktops).*
+- 🌙 **Modo escuro:** alternância manual através de um botão no cabeçalho (header).
+- 📱 **Interface Responsiva:** otimizada para uso em dispositivos móveis, tablets e desktops.
+
 
 ## 🛠 Tecnologias Usadas
 
