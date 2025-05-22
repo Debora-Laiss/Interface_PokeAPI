@@ -82,14 +82,13 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import axios from 'axios'
 
 import PokemonCard from '../../components/pokemon/PokemonCard.vue'
 import PokemonInfoDialog from '../../components/dialogs/PokemonInfoDialog.vue'
 import imgPrincipal from '../../assets/img-principal.svg'
 
-// Variáveis
 const pokemons = ref([])
 const search = ref('')
 const showDialog = ref(false)
@@ -97,11 +96,28 @@ const selectedPokemon = ref(null)
 const viewType = ref('grid')
 
 // Scroll infinito
+const filteredPokemons = ref([])
+
 const limit = ref(24)
 const offset = ref(0)
 const isLoading = ref(false)
 const scrollObserver = ref(null)
 let observer = null
+
+const detailsCache = new Map()
+
+const getPokemonId = (url) => {
+  const id = url.split('/').filter(segment => segment !== '').pop()
+  return parseInt(id)
+}
+
+const fetchDetails = async (pokemon) => {
+  const id = getPokemonId(pokemon.url)
+  if (!detailsCache.has(id)) {
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    detailsCache.set(id, response.data)
+  }
+}
 
 const loadMorePokemons = async () => {
   if (isLoading.value) return
@@ -138,37 +154,35 @@ onBeforeUnmount(() => {
 
 // Utilidades
 const showPokemon = async (id) => {
-  const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`) //pegar do ultis
+  const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
   selectedPokemon.value = response.data
   showDialog.value = true
 }
 
-const getPokemonId = (url) => {
-  const id = url.split('/').filter(segment => segment !== '').pop()
-  return parseInt(id)
-}
-
-const getMoveLevel = (move) => {
-  for (let version of move.version_group_details) {
-    if (
-      version.version_group.name === 'sword-shield' &&
-      version.move_learn_method.name === 'level-up'
-    ) {
-      return version.level_learned_at
-    }
+// WATCH para atualizar filtro toda vez que o termo de busca mudar
+watch(search, async (newVal) => {
+  const term = newVal.toLowerCase().trim()
+  if (!term) {
+    filteredPokemons.value = pokemons.value
+    return
   }
-  return 0
-}
 
-// Filtro
-const filteredPokemons = computed(() => {
-  if (!search.value.trim()) {
-    return pokemons.value
-  }
-  return pokemons.value.filter((item) => 
-    item.name.toLowerCase().includes(search.value.toLowerCase())
-  )
-})
+  // Busca detalhes de todos pokemons para filtrar por tipo
+  await Promise.all(pokemons.value.map(pokemon => fetchDetails(pokemon)))
+
+  // Filtra por nome, id e tipo
+  filteredPokemons.value = pokemons.value.filter(pokemon => {
+    const nameMatch = pokemon.name.toLowerCase().includes(term)
+    const id = getPokemonId(pokemon.url)
+    const idMatch = id.toString() === term
+    const details = detailsCache.get(id)
+    const typeMatch = details?.types.some(typeInfo =>
+      typeInfo.type.name.toLowerCase().includes(term)
+    )
+
+    return nameMatch || idMatch || typeMatch
+  })
+}, { immediate: true })
 
 </script>
 
